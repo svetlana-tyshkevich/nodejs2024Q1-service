@@ -4,15 +4,21 @@ import {
   Post,
   Body,
   Param,
-  Delete, Header, Put, ValidationPipe, HttpException, HttpStatus, ParseUUIDPipe, HttpCode,
+  Delete,
+  Header,
+  Put,
+  ValidationPipe,
+  HttpException,
+  HttpStatus,
+  ParseUUIDPipe,
+  HttpCode,
 } from '@nestjs/common';
 import { AlbumService } from './album.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 
 @Controller('album')
 export class AlbumController {
-  constructor(private readonly albumService: AlbumService) {
-  }
+  constructor(private readonly albumService: AlbumService) {}
 
   @Post()
   @Header('Content-Type', 'application/json')

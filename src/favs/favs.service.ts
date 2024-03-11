@@ -63,7 +63,6 @@ export class FavsService {
     const artistIndex = favsDB.artists.findIndex((artist) => artist.id === id);
     if (artistIndex >= 0) {
       favsDB.artists.splice(artistIndex, 1);
-      console.log(favsDB.artists);
       return true;
     }
     return false;

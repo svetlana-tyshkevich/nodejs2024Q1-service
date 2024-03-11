@@ -11,6 +11,4 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     { provide: APP_INTERCEPTOR, useClass: UserResponceInterceptor },
   ],
 })
-
-export class UserModule {
-}
+export class UserModule {}

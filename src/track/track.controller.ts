@@ -18,8 +18,7 @@ import { CreateTrackDto } from './dto/create-track.dto';
 
 @Controller('track')
 export class TrackController {
-  constructor(private readonly trackService: TrackService) {
-  }
+  constructor(private readonly trackService: TrackService) {}
 
   @Post()
   @Header('Content-Type', 'application/json')
