@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { v4 as uuidv4 } from 'uuid';
-import { albumDB, trackDB } from '../db';
+import { albumDB, favsDB, trackDB } from '../db';
 import { IAlbum } from './interfaces/album.interface';
 
 @Injectable()
@@ -40,6 +40,12 @@ export class AlbumService {
       trackDB.forEach((track) => {
         if (track.albumId === id) track.albumId = null;
       });
+      const albumFavsIndex = favsDB.albums.findIndex(
+        (album) => album.id === id,
+      );
+      if (albumFavsIndex >= 0) {
+        favsDB.albums.splice(albumFavsIndex, 1);
+      }
       return true;
     }
     return false;

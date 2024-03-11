@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { v4 as uuidv4 } from 'uuid';
-import { trackDB } from '../db';
+import { favsDB, trackDB } from '../db';
 import { ITrack } from './interfaces/track.interface';
 
 @Injectable()
@@ -38,6 +38,12 @@ export class TrackService {
     const trackIndex = trackDB.findIndex((track) => track.id === id);
     if (trackIndex >= 0) {
       trackDB.splice(trackIndex, 1);
+      const trackFavsIndex = favsDB.tracks.findIndex(
+        (track) => track.id === id,
+      );
+      if (trackFavsIndex >= 0) {
+        favsDB.tracks.splice(trackFavsIndex, 1);
+      }
       return true;
     }
     return false;

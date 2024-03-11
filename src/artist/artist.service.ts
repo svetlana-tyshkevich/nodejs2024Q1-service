@@ -1,14 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { v4 as uuidv4 } from 'uuid';
-import { artistDB, trackDB } from '../db';
+import { albumDB, artistDB, favsDB, trackDB } from '../db';
 import { IArtist } from './interfaces/artist.interface';
 
 @Injectable()
 export class ArtistService {
   create(createArtistDto: CreateArtistDto) {
     const id = uuidv4();
-    const newArtist = {id, ...createArtistDto};
+    const newArtist = { id, ...createArtistDto };
     artistDB.push(newArtist);
     return newArtist;
   }
@@ -39,6 +39,15 @@ export class ArtistService {
       trackDB.forEach((track) => {
         if (track.artistId === id) track.artistId = null;
       });
+      albumDB.forEach((album) => {
+        if (album.artistId === id) album.artistId = null;
+      });
+      const artistFavsIndex = favsDB.artists.findIndex(
+        (artist) => artist.id === id,
+      );
+      if (artistFavsIndex >= 0) {
+        favsDB.artists.splice(artistFavsIndex, 1);
+      }
       return true;
     }
     return false;
