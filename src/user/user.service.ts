@@ -11,7 +11,14 @@ export class UserService {
     const id = uuidv4();
     const date = Date.now();
     const { login, password } = createUserDto;
-    const newUser = { id, login, password, version: 1, createdAt: date, updatedAt: date };
+    const newUser = {
+      id,
+      login,
+      password,
+      version: 1,
+      createdAt: date,
+      updatedAt: date,
+    };
     userDB.push(newUser);
     return newUser;
   }

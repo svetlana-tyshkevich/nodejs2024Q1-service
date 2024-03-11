@@ -6,7 +6,13 @@ import {
   Param,
   Delete,
   Put,
-  Res, HttpStatus, ParseUUIDPipe, Header, HttpCode, HttpException, ValidationPipe,
+  Res,
+  HttpStatus,
+  ParseUUIDPipe,
+  Header,
+  HttpCode,
+  HttpException,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -15,8 +21,7 @@ import { Response } from 'express';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {
-  }
+  constructor(private readonly userService: UserService) {}
 
   @Post()
   @Header('Content-Type', 'application/json')
