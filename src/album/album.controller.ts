@@ -4,39 +4,33 @@ import {
   Post,
   Body,
   Param,
-  Delete,
-  Header,
-  ValidationPipe,
-  HttpException,
-  HttpStatus,
-  ParseUUIDPipe,
-  Put,
-  HttpCode,
+  Delete, Header, Put, ValidationPipe, HttpException, HttpStatus, ParseUUIDPipe, HttpCode,
 } from '@nestjs/common';
-import { ArtistService } from './artist.service';
-import { CreateArtistDto } from './dto/create-artist.dto';
+import { AlbumService } from './album.service';
+import { CreateAlbumDto } from './dto/create-album.dto';
 
-@Controller('artist')
-export class ArtistController {
-  constructor(private readonly artistService: ArtistService) {}
+@Controller('album')
+export class AlbumController {
+  constructor(private readonly albumService: AlbumService) {
+  }
 
   @Post()
   @Header('Content-Type', 'application/json')
-  create(@Body(new ValidationPipe()) createArtistDto: CreateArtistDto) {
-    return this.artistService.create(createArtistDto);
+  create(@Body(new ValidationPipe()) createAlbumDto: CreateAlbumDto) {
+    return this.albumService.create(createAlbumDto);
   }
 
   @Get()
   @Header('Content-Type', 'application/json')
   findAll() {
-    return this.artistService.findAll();
+    return this.albumService.findAll();
   }
 
   @Get(':id')
   @Header('Content-Type', 'application/json')
   findOne(@Param('id', new ParseUUIDPipe()) id: string) {
-    const artist = this.artistService.findOne(id);
-    if (artist) return artist;
+    const album = this.albumService.findOne(id);
+    if (album) return album;
     else throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
   }
 
@@ -44,16 +38,16 @@ export class ArtistController {
   @Header('Content-Type', 'application/json')
   update(
     @Param('id', new ParseUUIDPipe()) id: string,
-    @Body(new ValidationPipe()) updateArtistDto: CreateArtistDto,
+    @Body(new ValidationPipe()) updateAlbumDto: CreateAlbumDto,
   ) {
-    return this.artistService.update(id, updateArtistDto);
+    return this.albumService.update(id, updateAlbumDto);
   }
 
   @Delete(':id')
   @HttpCode(204)
   @Header('Content-Type', 'application/json')
   remove(@Param('id', new ParseUUIDPipe()) id: string) {
-    const isDeleted = this.artistService.remove(id);
+    const isDeleted = this.albumService.remove(id);
     if (isDeleted) {
       return {};
     } else {
