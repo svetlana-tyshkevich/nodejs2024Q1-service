@@ -1,18 +1,36 @@
+version: "3.8"
+
 services:
   app:
     build: .
-    command: npm run start
+    command: npm run start:dev
     restart: unless-stopped
+    networks:
+      - custom-network
     ports:
       - ${PORT}:${PORT}
     depends_on:
       - postgres
+    volumes:
+      - './src:/usr/app/src'
 
   postgres:
     build: ./db
+    networks:
+      - custom-network
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - 'postgres-db:/var/lib/postgresql/data'
+
+networks:
+  custom-network:
+    driver: bridge
+
+volumes:
+  postgres-db:
+  db-logs:
